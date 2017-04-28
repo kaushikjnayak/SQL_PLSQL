@@ -1,0 +1,21 @@
+       SELECT substr(key_1,4) acct,curr_bal from invm where branch_no='00002' and curr_status <> '07' and gl_class_code='00002INR1321010101';
+                                                 *
+ERROR at line 13:
+ORA-06550: line 13, column 50: 
+PL/SQL: ORA-00942: table or view does not exist 
+ORA-06550: line 13, column 8: 
+PL/SQL: SQL Statement ignored 
+ORA-06550: line 19, column 42: 
+PLS-00364: loop index variable 'REC' use is invalid 
+ORA-06550: line 19, column 14: 
+PL/SQL: Statement ignored 
+ORA-06550: line 23, column 40: 
+PLS-00364: loop index variable 'REC' use is invalid 
+ORA-06550: line 23, column 19: 
+PL/SQL: Statement ignored 
+ORA-06550: line 24, column 29: 
+PLS-00364: loop index variable 'REC' use is invalid 
+ORA-06550: line 24, column 17: 
+PL/SQL: Statement ignored 
+
+

@@ -1,0 +1,34 @@
+
+CREATE OR REPLACE DIRECTORY EXT_TAB_DATA AS '/u01/app/oracle/product/11.2.0/xe/ORA_DIR';
+conn / as sysdba
+grant read,write on directory EXT_TAB_DATA to ops$kaushik;
+
+
+drop table CITY_EXT;
+
+CREATE TABLE CITY_EXT (
+  rank NUMBER(3),
+  name VARCHAR2(20),
+  population_2011 NUMBER(10),
+  population_2001 NUMBER(10),
+  State  VARCHAR2(20)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY "EXT_TAB_DATA"
+  ACCESS PARAMETERS (
+  RECORDS DELIMITED BY NEWLINE
+    FIELDS TERMINATED BY ','
+    MISSING FIELD VALUES ARE NULL
+    (
+    rank CHAR(3),
+    name CHAR(20),
+    population_2011 CHAR(10),
+    population_2001 CHAR(10),
+    State  CHAR(20)
+    )
+  )
+  LOCATION ('city_pop.txt')
+)
+PARALLEL 5
+REJECT LIMIT UNLIMITED;

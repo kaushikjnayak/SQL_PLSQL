@@ -1,0 +1,50 @@
+SQL> INSERT INTO EXPENSE VALUES (231,0.5,34356);
+
+1 row created.
+
+SQL> savepoint xv;
+
+Savepoint created.
+
+SQL> INSERT INTO EXPENSE VALUES (231,89.5,34359);
+INSERT INTO EXPENSE VALUES (231,89.5,34359)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (HR.MEMB_NO_FK) violated - parent key not found
+
+
+SQL> INSERT INTO MEMBER VALUES  (34356,'KAUSHIK J N',34359);
+INSERT INTO MEMBER VALUES  (34356,'KAUSHIK J N',34359)
+                                                *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> INSERT INTO MEMBER VALUES  (34359,'KAUSHIK J N',7453);
+
+1 row created.
+
+SQL> INSERT INTO EXPENSE VALUES (231,89.5,34359);
+
+1 row created.
+
+SQL> select * from expense;
+         231       45.3      34356
+         231         .5      34356
+         231         .5      34356
+         231       89.5      34359
+
+SQL> select sum(amount) from expense;
+      135.8
+
+SQL> rollback to xv;
+
+Rollback complete.
+
+SQL> select sum(amount) from expense;
+       46.3
+
+SQL> select * from expense;
+         231       45.3      34356
+         231         .5      34356
+         231         .5      34356

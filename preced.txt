@@ -1,0 +1,22 @@
+First             **,              NOT Exponentiation and logical negation
+
+Second           +,                - Arithmetic identity and negation (+ and -
+                                   used as unary operators)
+
+Third             *, /             Multiplication and division
+
+Fourth          +, -, ||           Addition, subtraction, and 
+
+                                   string concatenation                 
+
+Fifth           =, <>, !=, ~=, <,  Comparison
+               >, <=, >=, LIKE,
+               BETWEEN, IN,
+                IS NULL
+
+
+Sixth            AND              Logical conjunction
+
+Seventh          OR                        Logical inclusion
+
+Take

@@ -1,0 +1,21 @@
+SET SERVEROUTPUT OFF;
+
+DECLARE
+input VARCHAR2(10);
+
+BEGIN
+input := '&inp';
+DBMS_OUTPUT.PUT(input);
+END;
+/
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+output VARCHAR2(10);
+stat NUMBER;
+BEGIN
+DBMS_OUTPUT.GET_LINE(output,stat);
+DBMS_OUTPUT.PUT_LINE(output);
+END;
+/

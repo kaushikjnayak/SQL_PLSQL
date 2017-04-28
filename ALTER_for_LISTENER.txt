@@ -1,0 +1,2 @@
+alter system set local_listener='(ADDRESS=(PROTOCOL=tcp)(HOST=&IP)(PORT=1521))' scope=both;
+alter system register;

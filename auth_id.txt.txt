@@ -1,0 +1,27 @@
+Using Invoker's Rights Versus Definer's Rights (AUTHID Clause)
+By default, stored procedures and SQL methods execute with the privileges of their
+owner, not their current user. Suchdefiner's rightssubprograms are bound to the
+schema in which they reside, allowing you to refer to objects in the same schema
+without qualifying their names. For example, if schemasSCOTTandBLAKEboth have
+a table called dept, a procedure owned bySCOTTcan refer todeptrather than
+SCOTT.DEPT. If userBLAKEcallsSCOTT's procedure, the procedure still accesses the
+depttable owned bySCOTT.
+If you compile the same procedure in both schemas, you can define the schema name
+as a variable in SQL*Plus and refer to the table like&schema..dept. The code is
+portable, but if you change it, you must recompile it in each schema.
+A more maintainable way is to use theAUTHIDclause, which makes stored procedures
+and SQL methods execute with the privileges and schema context of the calling user.
+You can create one instance of the procedure, and many users can call it to access their
+own data.
+Suchinvoker's rightssubprograms are not bound to a particular schema. The following
+version of procedurecreate_deptexecutes with the privileges of the calling user
+and inserts rows into that user'sdepttable:
+CREATE PROCEDURE create_dept (
+my_deptno NUMBER,
+my_dname VARCHAR2,
+my_loc VARCHAR2) AUTHID CURRENT_USER AS
+BEGIN
+INSERT INTO dept VALUES (my_deptno, my_dname, my_loc);
+END;
+/
+Advantages of Invoker's Rights

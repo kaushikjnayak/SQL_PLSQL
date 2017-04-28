@@ -1,0 +1,43 @@
+CREATE TABLE dimension_tab (
+  fact_1_id   NUMBER NOT NULL,
+  fact_2_id   NUMBER NOT NULL,
+  fact_3_id   NUMBER NOT NULL,
+  fact_4_id   NUMBER NOT NULL,
+  sales_value NUMBER(10,2) NOT NULL
+);
+
+INSERT INTO dimension_tab
+SELECT TRUNC(DBMS_RANDOM.value(low => 1, high => 3)) AS fact_1_id,
+       TRUNC(DBMS_RANDOM.value(low => 1, high => 6)) AS fact_2_id,
+       TRUNC(DBMS_RANDOM.value(low => 1, high => 11)) AS fact_3_id,
+       TRUNC(DBMS_RANDOM.value(low => 1, high => 11)) AS fact_4_id,
+       ROUND(DBMS_RANDOM.value(low => 1, high => 100), 2) AS sales_value
+FROM   dual
+CONNECT BY level <= 1000;
+COMMIT;
+
+DROP TRIGGER TRG_AFTER_DDL
+
+
+select * from dimension_tab;
+
+select fact_1_id,fact_2_id,SUM(SALES_VALUE) from dimension_tab group by ROLLUP(fact_1_ID,FACT_2_ID);
+
+SELECT fact_1_id,
+       fact_2_id,
+       fact_3_id,
+       SUM(sales_value) AS sales_value,
+       GROUPING(FACT_1_ID) AS F_1,
+       GROUPING(FACT_2_ID) AS F_2,
+       GROUPING(FACT_3_ID) AS F_3
+
+FROM   dimension_tab
+GROUP BY CUBE (fact_1_id, fact_2_id, fact_3_id)
+ORDER BY fact_1_id, fact_2_id, fact_3_id;
+
+
+select fact_1_id,SUM(sales_value),case grouping(fact_1_id) WHEN 1 THEN 11 else fact_1_id end fact_1_id from DIMENSION_TAB group by fact_1_id
+UNION ALL
+select fact_2_id,SUM(sales_value),case grouping(fact_2_id) WHEN 1 THEN 22 else fact_2_id end fact_2_id from DIMENSION_TAB group by fact_2_id;
+
+select sales_value, count(SALES_VALUE) OVER ( ) ct from DIMENSION_TAB;

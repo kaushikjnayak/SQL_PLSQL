@@ -1,0 +1,57 @@
+SELECT DBMS_LOB.SUBSTR(a.concatstr
+  ||b.concatstr,4000,1)
+FROM
+  (SELECT e1.id,
+    concatenate_list(CURSOR
+    (SELECT DISTINCT e2.str FROM abcd_tmp e2 WHERE e2.id = e1.id
+    )) concatstr
+  FROM abcd_tmp e1
+  GROUP BY e1.id
+  ) a,
+  (SELECT e1.id,
+    concatenate_list(CURSOR
+    (SELECT DISTINCT e2.str FROM abcd_tmp e2 WHERE id LIKE '9%' AND e2.id = e1.id
+    )) concatstr
+  FROM abcd_tmp e1
+  GROUP BY e1.id
+  ) b
+WHERE a.id = b.id;
+
+
+CREATE OR REPLACE FUNCTION concatenate_list (p_cursor IN  SYS_REFCURSOR , delimiter IN VARCHAR2 DEFAULT ';')
+  RETURN  CLOB
+IS
+  l_return  CLOB; 
+  l_temp    VARCHAR2(500);
+BEGIN
+  LOOP
+    FETCH p_cursor
+    INTO  l_temp;
+    EXIT WHEN p_cursor%NOTFOUND;
+    l_return := l_return || delimiter|| l_temp;
+  END LOOP;
+  RETURN LTRIM(l_return, delimiter);
+END;
+/
+
+
+
+fn_create_unique ( )
+
+BEGIN
+
+open refcur for
+
+select concatenate_list 
+(
+)
+from
+
+(
+
+disticnt split strings
+
+) using argument
+
+END;
+/
