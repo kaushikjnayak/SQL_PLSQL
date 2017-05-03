@@ -1,20 +1,26 @@
+--Example using Raise statement within a for loop.
+
 SET SERVEROUTPUT ON;
-declare
-mult_13 EXCEPTION;
-BEGIN
 
-for x in 1..10000
-LOOP
+DECLARE mult_13
+EXCEPTION;
+
 BEGIN
-if x mod 133 = 0
-THEN 
-RAISE mult_13;
-END IF;
-EXCEPTION
-WHEN mult_13 THEN
-DBMS_OUTPUT.PUT_LINE ('EXCEPTION RAISED'||x);
+FOR x IN 1..10000 LOOP 
+BEGIN 
+   IF x MOD 133 = 0 THEN 
+    RAISE mult_13;
+   END IF;
+
+
+EXCEPTION 
+WHEN mult_13 
+ THEN DBMS_OUTPUT.PUT_LINE ('EXCEPTION RAISED'||x);
+
+ END;
+
+ END LOOP;
+
 END;
 
-END LOOP;
-
-END;
+/
