@@ -1,2 +1,5 @@
+--Change the local_listener to listen to a particular IP address, in case Host is mapped to a different Ip address 
+--and listener is not coming up after startup.
+
 alter system set local_listener='(ADDRESS=(PROTOCOL=tcp)(HOST=&IP)(PORT=1521))' scope=both;
 alter system register;
