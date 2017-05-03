@@ -1,3 +1,4 @@
+--Simple COncatenation Example.Take user Input
 set serveroutput on;
 
 DECLARE
