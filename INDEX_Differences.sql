@@ -1,3 +1,4 @@
+--COmposite Index Examples and performance compared.
 CREATE TABLE IDX_TST
 (
 C1 VARCHAR2(10),
