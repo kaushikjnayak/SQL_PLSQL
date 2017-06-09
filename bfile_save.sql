@@ -1,0 +1,27 @@
+CREATE DIRECTORY BFILE_DATA  AS 'D:\KAUSHIK\kjn\workspace\SQL\BFILE_DATA' ;
+
+CREATE TABLE IMAGE_DATA  
+(
+ IMAGE_ID NUMBER(5),
+ IMAGE_NAME VARCHAR2(20),
+ IMAGE BFILE
+ );
+
+DECLARE
+
+myfile BFILE;
+
+BEGIN
+ myfile := BFILENAME( 'BFILE_DATA' , 'garden_rose.jpg' );
+ 
+INSERT INTO IMAGE_DATA VALUES
+   ( 10001,
+     'RED GARDEN ROSE',
+     myfile
+   );
+
+END;
+
+/
+
+select * FROM IMAGE_DATA;
