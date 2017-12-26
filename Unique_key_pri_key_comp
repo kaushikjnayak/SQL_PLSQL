@@ -1,0 +1,15 @@
+create table  atest ( a NUMBER, b NUMBER ,CONSTRAINT q_unq 
+                       UNIQUE ( a,b ) );
+                       
+INSERT INTO atest(a,b) VALUES(1,NULL);     --| 
+INSERT INTO atest(a,b) VALUES(2,NULL);     --|
+INSERT INTO atest(a,b) VALUES(NULL,NULL);  --|-- all are allowed.
+INSERT INTO atest(a,b) VALUES(NULL,NULL);  --|  
+
+INSERT INTO atest(a,b) VALUES(1,NULL); -- Not allowed
+
+
+create table  btest ( a NUMBER, b NUMBER ,CONSTRAINT q_pk
+                       PRIMARY KEY ( a,b ) );
+                       
+INSERT INTO btest(a,b) VALUES(1,NULL);    -- NOT allowed
